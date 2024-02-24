@@ -1,0 +1,27 @@
+.log-in {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide la pantalla en dos partes iguales */
+    height: 100dvh;
+}
+.log-in div {
+    display: grid;
+    place-content: center;
+}
+.log-in h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.log-in p {
+    color: white;
+    text-align: justify;
+    text-align-last: center;
+    font-size: 18px;
+}
+.log-in div:nth-child(1) {
+    background-color: #07b6d5;
+    padding-inline: 20%;
+}
+.log-in div:nth-child(1) h1 {
+    color: white;
+    font-size: 65px;
+}

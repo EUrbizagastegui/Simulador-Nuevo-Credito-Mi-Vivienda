@@ -1,28 +1,27 @@
 import './Register.css'
 import { useState } from 'react';
-import { InputText } from 'primereact/inputtext';
+import LabelInput from '../label-input/LabelInput';
 import { Button } from 'primereact/button';
 
 const Register = () => {
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
 
+    const information = [
+        ['username', 'Nombre de usuario', username, setUsername],
+        ['email', 'Correo electrónico', email, setEmail],
+        ['password', 'Contraseña', password, setPassword],
+        ['repeatPassword', 'Repetir contraseña', repeatPassword, setRepeatPassword]
+    ]
+    
     return (
-        <div>
+        <div className='register'>
             <h1>Registrarse</h1>
-            <span className='p-float-label'>
-                <InputText id='username' value={username} onChange={(e) => setUsername(e.target.value)}/>
-                <label htmlFor="username">Usuario</label>
-            </span>
-            <span className='p-float-label'>
-                <InputText id='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-                <label htmlFor="password">Contraseña</label>
-            </span>
-            <span className='p-float-label'>
-                <InputText id='username' value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)}/>
-                <label htmlFor="repeatPassword">Repetir Contraseña</label>
-            </span>
+            {information.map((info) => 
+                <LabelInput key={info[0]} id={info[0]} text={info[1]} state={info[2]} setState={info[3]} />
+            )}
             <Button label='Registrarse' />
         </div>
     )
