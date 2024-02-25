@@ -8,7 +8,7 @@ const LogIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const information = [
+    let information = [
         ['email', 'Correo electrónico', email, setEmail],
         ['password', 'Contraseña', password, setPassword]
     ]

@@ -1,0 +1,10 @@
+.schedule-list {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.schedule-list-button {
+    margin-top: 40px;
+}

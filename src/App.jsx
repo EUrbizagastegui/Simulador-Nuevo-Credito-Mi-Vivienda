@@ -1,10 +1,12 @@
 import './App.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
+import 'primeicons/primeicons.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MainPage from './components/main-page/MainPage';
 import Home from './components/home/Home';
 import Register from './components/register/Register';
 import LogIn from './components/log-in/LogIn';
+import InformationInput from './components/information-input/InformationInput';
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/log-in" element={<LogIn />} />
+          <Route path='/information-input' element={<InformationInput />} />
 
           <Route path="/" element={<Navigate to="/main-page" />} />
           <Route path="*" element={<Navigate to="/main-page" />} />

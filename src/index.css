@@ -1,3 +1,24 @@
 * {
-  margin: 0;
+    margin: 0;
+}
+.toolbar, .footer {
+    background-color: #07B6D5;
+    border: 0;
+    border-radius: 0;
+    width: 100%;
+}
+.toolbar h1 {
+    color: white;
+}
+.toolbar-button {
+    margin-right: 10px;
+    background-color: transparent;
+    border: none;
+}
+.toolbar-button:hover {
+    cursor: pointer;
+    background-color: #07A7C6;
+}
+.footer {
+    margin-top: auto;
 }

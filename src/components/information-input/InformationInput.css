@@ -1,0 +1,12 @@
+.information-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100dvh;
+}
+/* Hacer que las 2 columnas se vuelvan 1 cuando la pantalla sea muy pequeña */
+.information-input-content {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
