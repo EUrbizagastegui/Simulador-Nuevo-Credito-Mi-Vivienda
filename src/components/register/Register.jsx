@@ -2,6 +2,7 @@ import './Register.css'
 import { useState } from 'react';
 import LabelInput from '../label-input/LabelInput';
 import { Button } from 'primereact/button';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -22,7 +23,9 @@ const Register = () => {
             {information.map((info) => 
                 <LabelInput key={info[0]} id={info[0]} text={info[1]} state={info[2]} setState={info[3]} />
             )}
-            <Button label='Registrarse' />
+            <Link to='/log-in'>
+                <Button label='Registrarse' />
+            </Link>
         </div>
     )
 }

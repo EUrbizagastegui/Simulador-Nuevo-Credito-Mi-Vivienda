@@ -15,6 +15,7 @@
     color: white;
     text-align: justify;
     text-align-last: center;
+    line-height: 30px;
     font-size: 18px;
 }
 .log-in div:nth-child(1) {
@@ -24,4 +25,7 @@
 .log-in div:nth-child(1) h1 {
     color: white;
     font-size: 65px;
+}
+.log-in button {
+    width: 100%;
 }

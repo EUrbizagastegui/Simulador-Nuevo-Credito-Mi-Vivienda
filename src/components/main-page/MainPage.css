@@ -1,14 +1,69 @@
-.toolbar {
-    background-color: red;
+.main-page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100dvh;
+    grid-template-rows: 90px 600px 90px;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+.toolbar, .footer {
+    background-color: #07B6D5;
+    border: 0;
+    border-radius: 0;
+    width: 100%;
+}
+.toolbar h1 {
+    color: white;
 }
 .toolbar-button {
-    padding: 20px 20px 20px 20px;
     margin-right: 10px;
     background-color: transparent;
     border: none;
 }
 .toolbar-button:hover {
     cursor: pointer;
-    background-color: blue;
+    background-color: #07A7C6;
 }
-
+.main-page-content-center {
+    display: grid;
+    width: 70%;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+}
+.main-page-content-center img {
+    display: block;
+    width: 100%;
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+}
+.main-page-content-center h2 {
+    margin-bottom: 20px;
+}
+.main-page-content-center div:nth-child(2) {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+    padding-left: 20px;
+    text-align: justify;
+}
+.main-page-content-center div:nth-child(3) {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+    text-align: justify;
+    text-align-last: center;
+    width: 70%;
+    height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.main-page-content-center div:nth-child(4) {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+    padding-left: 20px;
+    padding-top: 20px;
+    width: 70%;
+    height: 100%;
+}
+.main-page-content-center div:nth-child(3) h2, .main-page-content-center div:nth-child(4) h2 {
+    text-align: center;
+}

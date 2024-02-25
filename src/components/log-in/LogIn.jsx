@@ -2,6 +2,7 @@ import './LogIn.css'
 import { useState } from 'react';
 import LabelInput from '../label-input/LabelInput';
 import { Button } from 'primereact/button';
+import { Link } from 'react-router-dom';
 
 const LogIn = () => {
     const [email, setEmail] = useState('');
@@ -23,7 +24,9 @@ const LogIn = () => {
                 {information.map((info) => 
                     <LabelInput key={info[0]} id={info[0]} text={info[1]} state={info[2]} setState={info[3]} />
                 )}
-                <Button label='Iniciar Sesión' />
+                <Link to='/home'>
+                    <Button label='Iniciar Sesión' />
+                </Link>
             </div>
         </div>
     )
