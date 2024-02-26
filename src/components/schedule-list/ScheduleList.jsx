@@ -3,19 +3,19 @@ import ScheduleListItem from '../schedule-list-item/ScheduleListItem'
 import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
 
-const ScheduleList = ({schedules}) => {
+const ScheduleList = ({schedules, username}) => {
     return schedules.lenght > 0 ? (
         /* Mappear schedules para mostrar ScheduleListItems */
         <div className='schedule-list'>
             <ScheduleListItem />
-            <Link to='/information-input'>
+            <Link to={`/information-input/${username}`}>
                 <Button className='schedule-list-button' label='Agregar Cronograma' />
             </Link>
         </div>
     ) :  (
         <div className='schedule-list'>
             <h1>No hay cronogramas simulados.</h1>
-            <Link to='/information-input'>
+            <Link to={`/information-input/${username}`}>
                 <Button className='schedule-list-button' label='Agregar Cronograma' />
             </Link>
         </div>

@@ -13,10 +13,10 @@ function App() {
       <Router>
         <Routes>
           <Route path="/main-page" element={<MainPage />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/home/:username" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/log-in" element={<LogIn />} />
-          <Route path='/information-input' element={<InformationInput />} />
+          <Route path='/information-input/:username' element={<InformationInput />} />
 
           <Route path="/" element={<Navigate to="/main-page" />} />
           <Route path="*" element={<Navigate to="/main-page" />} />

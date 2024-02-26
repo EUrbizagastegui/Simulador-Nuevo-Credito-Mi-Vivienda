@@ -6,14 +6,18 @@
 .information-input h1:nth-child(2) {
     padding: 50px;
 }
+.information-input Button {
+    margin-bottom: 20px;
+}
 .information-input-content {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     width: 100%; /* Asegura que el grid ocupe todo el ancho disponible */
-    max-width: 620px; /* Opcional: establece un ancho máximo para evitar que el grid se expanda demasiado en pantallas grandes */
+    max-width: 720px; /* Opcional: establece un ancho máximo para evitar que el grid se expanda demasiado en pantallas grandes */
     place-items: center;
     place-content: center;
+    padding-inline: 50px;
 }   
 .input-currency {
     display: flex;
@@ -21,7 +25,11 @@
     justify-content: start;
     align-items: start;
     margin-bottom: 20px;
+    width: 100%;
 }
 .input-currency label {
     margin-bottom: 10px;
+}
+.input-currency .p-dropdown {
+    width: 100%;
 }

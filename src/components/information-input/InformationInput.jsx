@@ -1,11 +1,14 @@
 import './InformationInput.css'
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Toolbar } from 'primereact/toolbar';
 import { Dropdown } from 'primereact/dropdown';
+import { Button } from 'primereact/button';
 import LabelInput from '../label-input/LabelInput';
 
 const InformationInput = () => {
-    const [username, setUsername] = useState('Erick');
+    const [isScheOpen, setIsScheOpen] = useState(false);
+    const { username } = useParams();
     const [coins, setCoins] = useState('');
     const [disbursementDate, setDisbursementDate] = useState('');
     const [paymentDay, setPaymentDay] = useState('');
@@ -19,6 +22,25 @@ const InformationInput = () => {
     const [desgravamenInsuranceRate, setDesgravamenInsuranceRate] = useState(0);
     const [propertyInsuranceRate, setPropertyInsuranceRate] = useState(0);
     const [postage, setPostage] = useState(0);
+
+    const [scheduleInformation, setScheduleInformation] = useState({
+        username: username,
+        coins: coins,
+        disbursementDate: disbursementDate,
+        paymentDay: paymentDay,
+        amount: amount,
+        propertyValue: propertyValue,
+        TEA: TEA,
+        feesPerYear: feesPerYear,
+        gracePeriod: gracePeriod,
+        paymentPeriod: paymentPeriod,
+        totalTerm: totalTerm,
+        desgravamenInsuranceRate: desgravamenInsuranceRate,
+        propertyInsuranceRate: propertyInsuranceRate,
+        postage: postage
+    });
+
+    const [schedule, setSchedule] = useState([]);
 
     const coinOptions = [
         ['Soles', 'Dólares'],
@@ -51,6 +73,19 @@ const InformationInput = () => {
         </div>
     )
 
+    const toggleSchedule = () => {
+        setIsScheOpen(true)
+        calculateSchedule()
+    }
+
+    const calculateSchedule = () => {
+        let newArray = []
+        for (let i = 1; i <= totalTerm; i++) {
+            newArray.push([i, i, i, i, i, i, i, i, i, i]);
+        }
+        setSchedule(newArray);
+    }
+
     return (
         <div className='information-input'>
             <Toolbar className='toolbar' start={userNameH1} end={userIcon}/>
@@ -64,6 +99,12 @@ const InformationInput = () => {
                     <LabelInput key={info[0]} id={info[0]} text={info[1]} state={info[2]} setState={info[3]} keyfilter={info[4]} />
                 )}
             </div>
+            <Button label='Calcular' onClick={toggleSchedule}/>
+            {isScheOpen && (
+                schedule.map((info) =>
+                    <h1 key={info[0]}>{info}</h1>
+                )
+            )}
             <Toolbar className='footer' center='© 2024 Erick Urbizagastegui - Salvador Torres'/>
         </div>
     )

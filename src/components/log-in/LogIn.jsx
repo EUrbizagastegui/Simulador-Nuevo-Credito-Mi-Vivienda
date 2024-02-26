@@ -5,6 +5,7 @@ import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
 
 const LogIn = () => {
+    const [username, setUsername] = useState('Erick');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -24,7 +25,7 @@ const LogIn = () => {
                 {information.map((info) => 
                     <LabelInput key={info[0]} id={info[0]} text={info[1]} state={info[2]} setState={info[3]} />
                 )}
-                <Link to='/home'>
+                <Link to='/home/Shavi'>
                     <Button label='Iniciar Sesión' />
                 </Link>
             </div>

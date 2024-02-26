@@ -1,11 +1,12 @@
 import './Home.css'
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Toolbar } from 'primereact/toolbar';
 import ScheduleList from '../schedule-list/ScheduleList';
 
 const Home = () => {
-    const [username, setUsername] = useState('Erick');
     const [schedules, setSchedules] = useState([]);
+    const { username } = useParams(); // Extraemos el parámetro de la URL
     
     let userNameH1 = (
         <div>
@@ -20,7 +21,7 @@ const Home = () => {
     return (
         <div className='home'>
             <Toolbar className='toolbar' start={userNameH1} end={userIcon}/>
-            <ScheduleList schedules={schedules} />
+            <ScheduleList schedules={schedules} username={username} />
             <Toolbar className='footer' center='© 2024 Erick Urbizagastegui - Salvador Torres'/>
         </div>
     )

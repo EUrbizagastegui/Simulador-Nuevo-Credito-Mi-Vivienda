@@ -4,7 +4,11 @@
     justify-content: start;
     align-items: start;
     margin-bottom: 20px;
+    width: 100%
 }
 .label-input label {
     margin-bottom: 10px;
+}
+.label-input .p-inputtext {
+    width: 100%;
 }
