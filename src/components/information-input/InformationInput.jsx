@@ -23,23 +23,6 @@ const InformationInput = () => {
     const [propertyInsuranceRate, setPropertyInsuranceRate] = useState(0);
     const [postage, setPostage] = useState(0);
 
-    const [scheduleInformation, setScheduleInformation] = useState({
-        username: username,
-        coins: coins,
-        disbursementDate: disbursementDate,
-        paymentDay: paymentDay,
-        amount: amount,
-        propertyValue: propertyValue,
-        TEA: TEA,
-        feesPerYear: feesPerYear,
-        gracePeriod: gracePeriod,
-        paymentPeriod: paymentPeriod,
-        totalTerm: totalTerm,
-        desgravamenInsuranceRate: desgravamenInsuranceRate,
-        propertyInsuranceRate: propertyInsuranceRate,
-        postage: postage
-    });
-
     const [schedule, setSchedule] = useState([]);
 
     const coinOptions = [
@@ -78,12 +61,46 @@ const InformationInput = () => {
         calculateSchedule()
     }
 
+    let inicialAmount = amount;
+    const TNA = ((1 + (TEA / 100)) ** (1 / 12) - 1) * 12 * 365 / 360 /* POSIBLEMENTE DEBA SER LET */
+    const i = TNA / 365 * 30
+    let monthlyInterest = 0
+    const TDA = (desgravamenInsuranceRate / 100) * 12
+    const d = TDA / 365 * 30
+    const monthlyDesgravamenInsurance = amount * d
+    const TMA = (propertyInsuranceRate / 100) * 12
+    const n = TMA / 365 * 30
+    const monthlyPropertyInsurance = propertyValue * n
+    const initialFee = amount * (i / (1 - (1 + i) ** (-totalTerm)))
+    const fee = initialFee + monthlyDesgravamenInsurance + monthlyPropertyInsurance + postage
+    let amortization = 0
+    let counter = 1
+    let newArray = [[null, inicialAmount, null, null, null, null, null, null]]
+
     const calculateSchedule = () => {
-        let newArray = []
-        for (let i = 1; i <= totalTerm; i++) {
-            newArray.push([i, i, i, i, i, i, i, i, i, i]);
-        }
-        setSchedule(newArray);
+        if (inicialAmount <= 0)
+            return
+
+        // Antes de agregar los números al newArray, redondearlos a dos decimales
+        monthlyInterest = (inicialAmount * i).toFixed(2)
+        console.log(inicialAmount, monthlyInterest)
+
+        amortization = (fee - monthlyInterest - monthlyDesgravamenInsurance - monthlyPropertyInsurance - postage).toFixed(2)
+        console.log(inicialAmount, amortization)
+
+        inicialAmount = (inicialAmount - amortization).toFixed(2)
+        console.log(inicialAmount)
+
+        // Agregar los números redondeados al newArray
+        newArray.push([counter, inicialAmount, amortization, monthlyInterest, monthlyDesgravamenInsurance, monthlyPropertyInsurance, postage, fee]);
+
+        console.log(counter, inicialAmount, amortization, monthlyInterest, monthlyDesgravamenInsurance, monthlyPropertyInsurance, postage, fee)
+        
+        setSchedule(newArray)
+
+        counter++
+
+        calculateSchedule()
     }
 
     return (
