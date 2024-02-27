@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import { Toolbar } from 'primereact/toolbar';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import LabelInput from '../label-input/LabelInput';
 
 const InformationInput = () => {
@@ -61,7 +63,7 @@ const InformationInput = () => {
         calculateSchedule()
     }
 
-    let inicialAmount = amount;
+    let inicialAmount = Number(amount);
     const TNA = ((1 + (TEA / 100)) ** (1 / 12) - 1) * 12 * 365 / 360 /* POSIBLEMENTE DEBA SER LET */
     const i = TNA / 365 * 30
     let monthlyInterest = 0
@@ -71,31 +73,60 @@ const InformationInput = () => {
     const TMA = (propertyInsuranceRate / 100) * 12
     const n = TMA / 365 * 30
     const monthlyPropertyInsurance = propertyValue * n
+    const portes = Number(postage)
     const initialFee = amount * (i / (1 - (1 + i) ** (-totalTerm)))
-    const fee = initialFee + monthlyDesgravamenInsurance + monthlyPropertyInsurance + postage
+    const fee = initialFee + monthlyDesgravamenInsurance + monthlyPropertyInsurance + portes
     let amortization = 0
     let counter = 1
-    let newArray = [[null, inicialAmount, null, null, null, null, null, null]]
+    let newArray = [
+        {
+            n: null,
+            inicialAmount: 50000.00,
+            amortization: null,
+            monthlyInterest: null,
+            monthlyDesgravamenInsurance: null,
+            monthlyPropertyInsurance: null,
+            postage: null,
+            fee: null
+        }
+    ]
+    const columns = [
+        {field: 'n', header: 'N°'},
+        {field: 'inicialAmount', header: 'Saldo Capital'},
+        {field: 'amortization', header: 'Amortización'},
+        {field: 'monthlyInterest', header: 'Interés'},
+        {field: 'monthlyDesgravamenInsurance', header: 'Seg. Desg.'},
+        {field: 'monthlyPropertyInsurance', header: 'Seg. Inm.'},
+        {field: 'postage', header: 'Portes'},
+        {field: 'fee', header: 'Cuota'}
+    ];
 
     const calculateSchedule = () => {
-        if (inicialAmount <= 0)
+        if ((inicialAmount).toFixed(2) <= 0.00) {
             return
+        }
 
         // Antes de agregar los números al newArray, redondearlos a dos decimales
-        monthlyInterest = (inicialAmount * i).toFixed(2)
-        console.log(inicialAmount, monthlyInterest)
+        monthlyInterest = inicialAmount * i
 
-        amortization = (fee - monthlyInterest - monthlyDesgravamenInsurance - monthlyPropertyInsurance - postage).toFixed(2)
-        console.log(inicialAmount, amortization)
+        amortization = fee - monthlyInterest - monthlyDesgravamenInsurance - monthlyPropertyInsurance - portes
 
-        inicialAmount = (inicialAmount - amortization).toFixed(2)
-        console.log(inicialAmount)
+        inicialAmount = inicialAmount - amortization
 
         // Agregar los números redondeados al newArray
-        newArray.push([counter, inicialAmount, amortization, monthlyInterest, monthlyDesgravamenInsurance, monthlyPropertyInsurance, postage, fee]);
+        newArray.push(
+            {
+                n: counter,
+                inicialAmount: (inicialAmount).toFixed(2),
+                amortization: (amortization).toFixed(2),
+                monthlyInterest: (monthlyInterest).toFixed(2),
+                monthlyDesgravamenInsurance: (monthlyDesgravamenInsurance).toFixed(2),
+                monthlyPropertyInsurance: (monthlyPropertyInsurance).toFixed(2),
+                postage: (portes).toFixed(2),
+                fee: (fee).toFixed(2)
+            }
+        );
 
-        console.log(counter, inicialAmount, amortization, monthlyInterest, monthlyDesgravamenInsurance, monthlyPropertyInsurance, postage, fee)
-        
         setSchedule(newArray)
 
         counter++
@@ -106,6 +137,7 @@ const InformationInput = () => {
     return (
         <div className='information-input'>
             <Toolbar className='toolbar' start={userNameH1} end={userIcon}/>
+
             <h1>Insertar Información</h1>
             <div className="information-input-content">
                 <div className='input-currency'>
@@ -116,12 +148,18 @@ const InformationInput = () => {
                     <LabelInput key={info[0]} id={info[0]} text={info[1]} state={info[2]} setState={info[3]} keyfilter={info[4]} />
                 )}
             </div>
+
             <Button label='Calcular' onClick={toggleSchedule}/>
-            {isScheOpen && (
-                schedule.map((info) =>
-                    <h1 key={info[0]}>{info}</h1>
-                )
-            )}
+
+            {
+                isScheOpen && 
+                    <DataTable value={schedule} tableStyle={{ minWidth: '50rem' }}>
+                        {columns.map((col, i) => (
+                            <Column key={col.field} field={col.field} header={col.header} />
+                        ))}
+                    </DataTable>
+            }
+
             <Toolbar className='footer' center='© 2024 Erick Urbizagastegui - Salvador Torres'/>
         </div>
     )
