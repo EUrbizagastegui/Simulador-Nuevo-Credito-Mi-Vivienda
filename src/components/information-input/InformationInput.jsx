@@ -64,23 +64,27 @@ const InformationInput = () => {
     }
 
     let inicialAmount = Number(amount);
-    const TNA = ((1 + (TEA / 100)) ** (1 / 12) - 1) * 12 * 365 / 360 /* POSIBLEMENTE DEBA SER LET */
+    const TNA = ((1 + (TEA / 100)) ** (1 / (12)) - 1) * 12 * 365 / 360
     const i = TNA / 365 * 30
     let monthlyInterest = 0
     const TDA = (desgravamenInsuranceRate / 100) * 12
     const d = TDA / 365 * 30
-    const monthlyDesgravamenInsurance = amount * d
+    let monthlyDesgravamenInsurance = inicialAmount * d
     const TMA = (propertyInsuranceRate / 100) * 12
     const n = TMA / 365 * 30
     const monthlyPropertyInsurance = propertyValue * n
     const portes = Number(postage)
-    const initialFee = amount * (i / (1 - (1 + i) ** (-totalTerm)))
-    const fee = initialFee + monthlyDesgravamenInsurance + monthlyPropertyInsurance + portes
+    let initialFee = 0
+    let fee = 0
+    let gPeriod = gracePeriod
     let amortization = 0
     let counter = 1
+    let contadorPeriodoGracia = 1
+    let totalAmortizacion = 0
+
     let newArray = [
         {
-            n: null,
+            n: 0,
             inicialAmount: 50000.00,
             amortization: null,
             monthlyInterest: null,
@@ -103,17 +107,58 @@ const InformationInput = () => {
 
     const calculateSchedule = () => {
         if ((inicialAmount).toFixed(2) <= 0.00) {
+            console.log(totalAmortizacion)
             return
         }
-
-        // Antes de agregar los números al newArray, redondearlos a dos decimales
+        
         monthlyInterest = inicialAmount * i
 
-        amortization = fee - monthlyInterest - monthlyDesgravamenInsurance - monthlyPropertyInsurance - portes
+        if (gPeriod == 0) {
+            if (contadorPeriodoGracia == 1) {
+                initialFee = inicialAmount * (i / (1 - (1 + i) ** (-(totalTerm - gracePeriod))))
 
-        inicialAmount = inicialAmount - amortization
+                fee = initialFee + monthlyDesgravamenInsurance + monthlyPropertyInsurance + portes
 
-        // Agregar los números redondeados al newArray
+                contadorPeriodoGracia++
+            }
+
+            amortization = fee - monthlyInterest - monthlyDesgravamenInsurance - monthlyPropertyInsurance - portes
+            totalAmortizacion += amortization
+
+            inicialAmount = inicialAmount - amortization
+
+            newArray.push(
+                {
+                    n: counter,
+                    inicialAmount: (inicialAmount).toFixed(2),
+                    amortization: (amortization).toFixed(2),
+                    monthlyInterest: (monthlyInterest).toFixed(2),
+                    monthlyDesgravamenInsurance: (monthlyDesgravamenInsurance).toFixed(2),
+                    monthlyPropertyInsurance: (monthlyPropertyInsurance).toFixed(2),
+                    postage: (portes).toFixed(2),
+                    fee: (fee).toFixed(2)
+                }
+            );
+        } else {
+            inicialAmount = inicialAmount + monthlyInterest + monthlyDesgravamenInsurance + monthlyPropertyInsurance + portes
+
+            gPeriod--
+
+            newArray.push(
+                {
+                    n: counter,
+                    inicialAmount: (inicialAmount).toFixed(2),
+                    amortization: (0.00).toFixed(2),
+                    monthlyInterest: (0.00).toFixed(2),
+                    monthlyDesgravamenInsurance: (0.00).toFixed(2),
+                    monthlyPropertyInsurance: (0.00).toFixed(2),
+                    postage: (0.00).toFixed(2),
+                    fee: (0.00).toFixed(2)
+                }
+            );
+        }
+
+        /* // Agregar los números redondeados al newArray
         newArray.push(
             {
                 n: counter,
@@ -125,7 +170,7 @@ const InformationInput = () => {
                 postage: (portes).toFixed(2),
                 fee: (fee).toFixed(2)
             }
-        );
+        ); */
 
         setSchedule(newArray)
 
