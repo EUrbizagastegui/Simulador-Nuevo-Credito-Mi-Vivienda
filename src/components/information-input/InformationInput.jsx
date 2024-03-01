@@ -1,31 +1,38 @@
 import './InformationInput.css'
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Toolbar } from 'primereact/toolbar';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
 import LabelInput from '../label-input/LabelInput';
 
 const InformationInput = () => {
-    const [isScheOpen, setIsScheOpen] = useState(false);
     const { username } = useParams();
-    const [coins, setCoins] = useState('');
-    const [disbursementDate, setDisbursementDate] = useState('');
-    const [paymentDay, setPaymentDay] = useState('');
-    const [amount, setAmount] = useState(0);
-    const [propertyValue, setPropertyValue] = useState(0);
-    const [TEA, setTEA] = useState(0);
-    const [feesPerYear, setFeesPerYear] = useState(0);
-    const [gracePeriod, setGracePeriod] = useState(0);
-    const [paymentPeriod, setPaymentPeriod] = useState(0);
-    const [totalTerm, setTotalTerm] = useState(0);
-    const [desgravamenInsuranceRate, setDesgravamenInsuranceRate] = useState(0);
-    const [propertyInsuranceRate, setPropertyInsuranceRate] = useState(0);
-    const [postage, setPostage] = useState(0);
+    const [data, setData] = useState({
+        'currency': '',
+        'disbursementDate': '',
+        'paymentDay': 0,
+        'amount': 0,
+        'propertyValue': 0,
+        'TEA': 0,
+        'feesPerYear': 0,
+        'gracePeriod': 0,
+        'paymentPeriod': 0,
+        'totalTerm': 0,
+        'desgravamenInsuranceRate': 0,
+        'propertyInsuranceRate': 0,
+        'postage': 0
+    });
 
-    const [schedule, setSchedule] = useState([]);
+    const navigate = useNavigate();
+
+    const updateData = (key, value) => {
+        setData(prevDatos => ({
+            ...prevDatos,
+            [key]: value
+        }));
+    }
 
     const coinOptions = [
         ['Soles', 'Dólares'],
@@ -33,18 +40,18 @@ const InformationInput = () => {
     ]
 
     let information = [
-        ['disbursementDate', 'Fecha de Desembolso del Crédito', disbursementDate, setDisbursementDate, '/^[^<>*!]+$/'],
-        ['paymentDay', 'Día de Pago', paymentDay, setPaymentDay, 'pint'],
-        ['amount', 'Importe Desembolsado', amount, setAmount, 'pnum'],
-        ['propertyValue', 'Valor del Inmueble', propertyValue, setPropertyValue, 'pnum'],
-        ['TEA', 'Tasa Efectiva Anual', TEA, setTEA, 'pnum'],
-        ['feesPerYear', 'Cuotas al Año', feesPerYear, setFeesPerYear, 'pint'],
-        ['gracePeriod', 'Período de Gracia', gracePeriod, setGracePeriod, 'pint'],
-        ['paymentPeriod', 'Período de Pago', paymentPeriod, setPaymentPeriod, 'pint'],
-        ['totalTerm', 'Plazo Total', totalTerm, setTotalTerm, 'pint'],
-        ['desgravamenInsuranceRate', 'Tasa Seguro de Desgravamen', desgravamenInsuranceRate, setDesgravamenInsuranceRate, 'pnum'],
-        ['propertyInsuranceRate', 'Tasa Seguro del Inmueble', propertyInsuranceRate, setPropertyInsuranceRate, 'pnum'],
-        ['postage', 'Portes', postage, setPostage, 'pnum']
+        ['disbursementDate', 'Fecha de Desembolso del Crédito', data.disbursementDate, updateData, '/^[^<>*!]+$/'],
+        ['paymentDay', 'Día de Pago', data.paymentDay, updateData, 'pint'],
+        ['amount', 'Importe Desembolsado', data.amount, updateData, 'pnum'],
+        ['propertyValue', 'Valor del Inmueble', data.propertyValue, updateData, 'pnum'],
+        ['TEA', 'Tasa Efectiva Anual', data.TEA, updateData, 'pnum'],
+        ['feesPerYear', 'Cuotas al Año', data.feesPerYear, updateData, 'pint'],
+        ['gracePeriod', 'Período de Gracia', data.gracePeriod, updateData, 'pint'],
+        ['paymentPeriod', 'Período de Pago', data.paymentPeriod, updateData, 'pint'],
+        ['totalTerm', 'Plazo Total', data.totalTerm, updateData, 'pint'],
+        ['desgravamenInsuranceRate', 'Tasa Seguro de Desgravamen', data.desgravamenInsuranceRate, updateData, 'pnum'],
+        ['propertyInsuranceRate', 'Tasa Seguro del Inmueble', data.propertyInsuranceRate, updateData, 'pnum'],
+        ['postage', 'Portes', data.postage, updateData, 'pnum']
     ]
 
     let userNameH1 = (
@@ -59,124 +66,8 @@ const InformationInput = () => {
     )
 
     const toggleSchedule = () => {
-        setIsScheOpen(true)
-        calculateSchedule()
-    }
-
-    let inicialAmount = Number(amount);
-    const TNA = ((1 + (TEA / 100)) ** (1 / (12)) - 1) * 12 * 365 / 360
-    const i = TNA / 365 * 30
-    let monthlyInterest = 0
-    const TDA = (desgravamenInsuranceRate / 100) * 12
-    const d = TDA / 365 * 30
-    let monthlyDesgravamenInsurance = inicialAmount * d
-    const TMA = (propertyInsuranceRate / 100) * 12
-    const n = TMA / 365 * 30
-    const monthlyPropertyInsurance = propertyValue * n
-    const portes = Number(postage)
-    let initialFee = 0
-    let fee = 0
-    let gPeriod = gracePeriod
-    let amortization = 0
-    let counter = 1
-    let contadorPeriodoGracia = 1
-    let totalAmortizacion = 0
-
-    let newArray = [
-        {
-            n: 0,
-            inicialAmount: 50000.00,
-            amortization: null,
-            monthlyInterest: null,
-            monthlyDesgravamenInsurance: null,
-            monthlyPropertyInsurance: null,
-            postage: null,
-            fee: null
-        }
-    ]
-    const columns = [
-        {field: 'n', header: 'N°'},
-        {field: 'inicialAmount', header: 'Saldo Capital'},
-        {field: 'amortization', header: 'Amortización'},
-        {field: 'monthlyInterest', header: 'Interés'},
-        {field: 'monthlyDesgravamenInsurance', header: 'Seg. Desg.'},
-        {field: 'monthlyPropertyInsurance', header: 'Seg. Inm.'},
-        {field: 'postage', header: 'Portes'},
-        {field: 'fee', header: 'Cuota'}
-    ];
-
-    const calculateSchedule = () => {
-        if ((inicialAmount).toFixed(2) <= 0.00) {
-            console.log(totalAmortizacion)
-            return
-        }
-        
-        monthlyInterest = inicialAmount * i
-
-        if (gPeriod == 0) {
-            if (contadorPeriodoGracia == 1) {
-                initialFee = inicialAmount * (i / (1 - (1 + i) ** (-(totalTerm - gracePeriod))))
-
-                fee = initialFee + monthlyDesgravamenInsurance + monthlyPropertyInsurance + portes
-
-                contadorPeriodoGracia++
-            }
-
-            amortization = fee - monthlyInterest - monthlyDesgravamenInsurance - monthlyPropertyInsurance - portes
-            totalAmortizacion += amortization
-
-            inicialAmount = inicialAmount - amortization
-
-            newArray.push(
-                {
-                    n: counter,
-                    inicialAmount: (inicialAmount).toFixed(2),
-                    amortization: (amortization).toFixed(2),
-                    monthlyInterest: (monthlyInterest).toFixed(2),
-                    monthlyDesgravamenInsurance: (monthlyDesgravamenInsurance).toFixed(2),
-                    monthlyPropertyInsurance: (monthlyPropertyInsurance).toFixed(2),
-                    postage: (portes).toFixed(2),
-                    fee: (fee).toFixed(2)
-                }
-            );
-        } else {
-            inicialAmount = inicialAmount + monthlyInterest + monthlyDesgravamenInsurance + monthlyPropertyInsurance + portes
-
-            gPeriod--
-
-            newArray.push(
-                {
-                    n: counter,
-                    inicialAmount: (inicialAmount).toFixed(2),
-                    amortization: (0.00).toFixed(2),
-                    monthlyInterest: (0.00).toFixed(2),
-                    monthlyDesgravamenInsurance: (0.00).toFixed(2),
-                    monthlyPropertyInsurance: (0.00).toFixed(2),
-                    postage: (0.00).toFixed(2),
-                    fee: (0.00).toFixed(2)
-                }
-            );
-        }
-
-        /* // Agregar los números redondeados al newArray
-        newArray.push(
-            {
-                n: counter,
-                inicialAmount: (inicialAmount).toFixed(2),
-                amortization: (amortization).toFixed(2),
-                monthlyInterest: (monthlyInterest).toFixed(2),
-                monthlyDesgravamenInsurance: (monthlyDesgravamenInsurance).toFixed(2),
-                monthlyPropertyInsurance: (monthlyPropertyInsurance).toFixed(2),
-                postage: (portes).toFixed(2),
-                fee: (fee).toFixed(2)
-            }
-        ); */
-
-        setSchedule(newArray)
-
-        counter++
-
-        calculateSchedule()
+        // Redirige a la página de cronograma pasando los datos iniciales como estado
+        navigate('/view-schedule/' + username, {state: {data}});
     }
 
     return (
@@ -187,7 +78,7 @@ const InformationInput = () => {
             <div className="information-input-content">
                 <div className='input-currency'>
                     <label htmlFor="currency">Moneda</label>
-                    <Dropdown id="currency" value={coins} onChange={(e) => setCoins(e.value)} options={coinOptions[0]} placeholder='Selecciona una moneda' />
+                    <Dropdown id="currency" value={data.currency} onChange={(e) => updateData('currency', e.value)} options={coinOptions[0]} placeholder='Selecciona una moneda' />
                 </div>
                 {information.map((info) =>
                     <LabelInput key={info[0]} id={info[0]} text={info[1]} state={info[2]} setState={info[3]} keyfilter={info[4]} />
@@ -195,15 +86,6 @@ const InformationInput = () => {
             </div>
 
             <Button label='Calcular' onClick={toggleSchedule}/>
-
-            {
-                isScheOpen && 
-                    <DataTable value={schedule} tableStyle={{ minWidth: '50rem' }}>
-                        {columns.map((col, i) => (
-                            <Column key={col.field} field={col.field} header={col.header} />
-                        ))}
-                    </DataTable>
-            }
 
             <Toolbar className='footer' center='© 2024 Erick Urbizagastegui - Salvador Torres'/>
         </div>
