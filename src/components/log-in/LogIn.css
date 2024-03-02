@@ -9,23 +9,41 @@
 }
 .log-in h1 {
     text-align: center;
+    text-wrap: balance;
     margin-bottom: 20px;
 }
 .log-in p {
     color: white;
-    text-align: justify;
-    text-align-last: center;
-    line-height: 30px;
+    text-wrap: pretty;
     font-size: 18px;
+    line-height: 30px;
 }
 .log-in div:nth-child(1) {
     background-color: #07b6d5;
     padding-inline: 20%;
+    padding: 10%;
 }
 .log-in div:nth-child(1) h1 {
     color: white;
-    font-size: 65px;
+    font-size: 40px
 }
 .log-in button {
     width: 100%;
+}
+.log-in Button {
+    padding: 10px;
+}
+@media (width < 601px) {
+    .log-in {
+        display: grid;
+        grid-template-rows: 1fr 2fr; /* Divide la pantalla en dos partes iguales */
+        grid-template-columns: 1fr; /* Divide la pantalla en dos partes iguales */
+        height: 100dvh;
+    }
+    .log-in div:nth-child(1) h1 {
+        margin-bottom: 0;
+    }
+    .log-in p {
+        display: none;
+    }
 }
