@@ -1,0 +1,10 @@
+.view-schedule {
+    text-align: center;
+    overflow: hidden;
+}
+.view-schedule h1:nth-child(2) {
+    margin-block: 20px;
+}
+.view-schedule Button {
+    margin-bottom: 20px;
+}

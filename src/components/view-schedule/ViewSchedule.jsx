@@ -1,16 +1,17 @@
 import './ViewSchedule.css'
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams, Link } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Toolbar } from 'primereact/toolbar';
 
 const ViewSchedule = () => {
+    const { username } = useParams();
     const [schedule, setSchedule] = useState([]);
 
     const location = useLocation();
     const data = location.state.data;
-    console.log(data)
 
     let inicialAmount = Number(data.amount);
     const TNA = ((1 + (Number(data.TEA) / 100)) ** (1 / (12)) - 1) * 12 * 365 / 360
@@ -57,7 +58,6 @@ const ViewSchedule = () => {
 
     const calculateSchedule = () => {
         if ((inicialAmount).toFixed(2) <= 0.00) {
-            console.log(totalAmortizacion)
             return
         }
         
@@ -129,18 +129,35 @@ const ViewSchedule = () => {
         calculateSchedule()
     }
 
+    let userNameH1 = (
+        <div>
+            <h1>{username}</h1>
+        </div>
+    )
+
+    const userIcon = (
+        <div>
+            <i className="pi pi-user" style={{ fontSize: '2.5rem', color: 'white'}}></i>
+        </div>
+    )
+
     useEffect(() => {
         calculateSchedule()
     }, [])
 
     return (
-        <div>
-            <h1>View Schedule</h1>
+        <div className='view-schedule'>
+            <Toolbar className='toolbar' start={userNameH1} end={userIcon}/>
+            <h1>Cronograma Simulado</h1>
+            <Link to={'/information-input/' + username}>
+                <Button label='Volver a calcular' />
+            </Link>
             <DataTable value={schedule} tableStyle={{ minWidth: '50rem' }}>
                 {columns.map((col, i) => (
                     <Column key={col.field} field={col.field} header={col.header} />
                 ))}
             </DataTable>
+            <Toolbar className='footer' center='© 2024 Erick Urbizagastegui - Salvador Torres'/>
         </div>
     )
 }

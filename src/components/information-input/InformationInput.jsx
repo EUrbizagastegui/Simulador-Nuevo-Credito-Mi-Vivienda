@@ -66,6 +66,37 @@ const InformationInput = () => {
     )
 
     const toggleSchedule = () => {
+        // Validación del dropdown
+        if (!data.currency) {
+            alert('Por favor selecciona una moneda');
+            return;
+        }
+
+        // Validación del formato de la fecha (xx/xx/xxxx)
+        const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+        if (!dateRegex.test(data.disbursementDate)) {
+            alert('Por favor ingresa una fecha válida en formato xx/xx/xxxx');
+            return;
+        }
+
+        // Validación de los demás campos
+        if (Number(data.paymentDay) < 1 || Number(data.paymentDay > 31)) {
+            alert('El día de pago debe estar entre 1 y 31');
+            return;
+        }
+        if (Number(data.amount) < 1 || Number(data.propertyValue) < 1 || Number(data.feesPerYear) < 1 || Number(data.gracePeriod) < 1 || Number(data.paymentPeriod) < 1 || Number(data.totalTerm) < 1) {
+            alert('Los campos de importe desembolsado, valor del inmueble, cuotas al año, período de gracia, período de pago y plazo total deben ser mayores a 0');
+            return;
+        }
+        if (Number(data.gracePeriod) > Number(data.totalTerm)) {
+            console.log(data.gracePeriod, data.totalTerm)
+            alert('El perido de gracia no puede ser mayor al plazo total');
+            return;
+        }
+        if (Number(data.TEA) <= 0 || Number(data.desgravamenInsuranceRate) <= 0 || Number(data.propertyInsuranceRate) <= 0 || Number(data.postage)<= 0) {
+            alert('La tasa efectiva anual, tasas de seguro de desgravamen, seguro del inmueble y portes deben ser mayores a 0');
+            return;
+        }
         // Redirige a la página de cronograma pasando los datos iniciales como estado
         navigate('/view-schedule/' + username, {state: {data}});
     }
