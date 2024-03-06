@@ -1,41 +1,57 @@
 import './ScheduleList.css'
+import { useState } from 'react';
 import ScheduleListItem from '../schedule-list-item/ScheduleListItem'
 import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
-import { useState,useEffect } from 'react';
-import UserService from '../../shared/services/user-service';
+import ConfirmAction from '../confirm-action/ConfirmAction';
+import PaymentScheduleService from '../../shared/services/payment-schedule-service';
 
-const ScheduleList = ({schedules, username}) => {
-    const [data, setData] = useState({});
+const ScheduleList = ({schedules, username, increaseActionCounter}) => {
+    const [showConfirmNotif, setShowConfirmNotif] = useState(false);
+    const [scheduleIdToDelete, setScheduleIdToDelete] = useState(0);
 
-    const fetchData = async () => {
+    const confirmText = '¿Está seguro de que desea eliminar el cronograma?'
+
+    const openConfirmNotif = (id) => {
+        setScheduleIdToDelete(id);
+        setShowConfirmNotif(true);
+    }
+
+    const closeConfirmNotif = () => {
+        setShowConfirmNotif(false);
+    }
+
+    const deleteSchedule = async (id) => {
         try {
-            const psResponse = await UserService.getAllPaymentSchedules(Number(localStorage.getItem('userId')));
-            setData(psResponse.data); // MAPEAR TENIENDO EN CUENTA QUE CADA ELEMENTO DEL ARRAY ES UN OBJETO
+            await PaymentScheduleService.delete(id);
+            increaseActionCounter();
+            setShowConfirmNotif(false);
         } catch (error) {
-            alert("An error ocurred when fetching data.", error);
+            alert("Ocurrió un error al eliminar el cronograma.", error);
         }
     }
 
-    useEffect(() => {
-        fetchData();
-    }, [])
-
-    useEffect(() => {
-        console.log(data);
-    }, [data])
-
-    return schedules.lenght > 0 ? (
-        /* Mappear schedules para mostrar ScheduleListItems */
+    return schedules.length > 0 ? (
         <div className='schedule-list'>
-            <ScheduleListItem />
+            {schedules.map((schedule) => {
+                return (
+                    <div key={schedule.id} className='schedule-list-row'>
+                        <ScheduleListItem schedule={schedule} />
+                        <Button icon="pi pi-times" severity="danger" aria-label="Cancel" onClick={() => openConfirmNotif(schedule.id)} />
+                    </div>
+                )
+            })}
+
             <Link to={`/information-input/${username}`}>
                 <Button className='schedule-list-button' label='Agregar Cronograma' />
             </Link>
+
+            <ConfirmAction show={showConfirmNotif} message={confirmText} onConfirm={() => deleteSchedule(scheduleIdToDelete)} onCancel={closeConfirmNotif} />
         </div>
-    ) :  (
+    ) : (
         <div className='schedule-list'>
             <h1>No hay cronogramas simulados.</h1>
+
             <Link to={`/information-input/${username}`}>
                 <Button className='schedule-list-button' label='Agregar Cronograma' />
             </Link>

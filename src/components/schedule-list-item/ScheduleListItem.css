@@ -1,0 +1,11 @@
+.schedule-list-item {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    width: 75%;
+    max-width: 750px; /* Opcional: establece un ancho máximo para evitar que el grid se expanda demasiado en pantallas grandes */
+
+    place-content: center;
+    padding-inline: 50px;
+    border: 1px solid black;
+}

@@ -54,7 +54,7 @@ const Register = () => {
             await UserService.create(data);
             navigate('/log-in');
         } catch (error) {
-            console.error("An error ocurred when sending data.", error);
+            console.error("Ocurrió un error al enviar la información.", error);
         }
     }
 
