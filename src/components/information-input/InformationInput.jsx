@@ -6,6 +6,7 @@ import { Toolbar } from 'primereact/toolbar';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import LabelInput from '../label-input/LabelInput';
+import PaymentScheduleService from '../../shared/services/payment-schedule-service';
 
 const InformationInput = () => {
     const { username } = useParams();
@@ -65,6 +66,12 @@ const InformationInput = () => {
         </div>
     )
 
+    const sendData = async (data) => {
+        console.log(data);
+        const response = await PaymentScheduleService.create(data);
+        console.log(response);
+    }
+
     const toggleSchedule = () => {
         // Validación del dropdown
         if (!data.currency) {
@@ -97,6 +104,26 @@ const InformationInput = () => {
             alert('La tasa efectiva anual, tasas de seguro de desgravamen, seguro del inmueble y portes deben ser mayores a 0');
             return;
         }
+
+        const information = {
+            "currency": data.currency,
+            "disbursementDate": data.disbursementDate,
+            "paymentDay": data.paymentDay,
+            "amount": Number(data.amount),
+            "propertyValue": Number(data.propertyValue),
+            "TEA": Number(data.TEA),
+            "feesPerYear": Number(data.feesPerYear),
+            "gracePeriod": Number(data.gracePeriod),
+            "paymentPeriod": Number(data.paymentPeriod),
+            "totalTerm": Number(data.totalTerm),
+            "desgravamenInsuranceRate": Number(data.desgravamenInsuranceRate),
+            "propertyInsuranceRate": Number(data.propertyInsuranceRate),
+            "postage": Number(data.postage),
+            "userId": Number(localStorage.getItem('userId'))
+        }
+
+        sendData(information);
+
         // Redirige a la página de cronograma pasando los datos iniciales como estado
         navigate('/view-schedule/' + username, {state: {data}});
     }
