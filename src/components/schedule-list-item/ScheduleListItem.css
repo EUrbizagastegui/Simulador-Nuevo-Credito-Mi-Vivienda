@@ -3,9 +3,21 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     width: 75%;
-    max-width: 750px; /* Opcional: establece un ancho máximo para evitar que el grid se expanda demasiado en pantallas grandes */
-
-    place-content: center;
-    padding-inline: 50px;
-    border: 1px solid black;
+    max-width: 500px; /* Opcional: establece un ancho máximo para evitar que el grid se expanda demasiado en pantallas grandes */
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #07B6D5;
+}
+.schedule-list-item h3 {
+    color: white;
+}
+@media (width < 501px) {
+    .schedule-list-item {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
+    .schedule-list-item h3 {
+        font-size:small;
+    }
 }

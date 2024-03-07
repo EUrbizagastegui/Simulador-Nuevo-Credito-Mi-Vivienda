@@ -2,6 +2,7 @@ import './InformationInput.css'
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import AppToolbar from '../app-toolbar/AppToolbar';
 import { Toolbar } from 'primereact/toolbar';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
@@ -54,17 +55,6 @@ const InformationInput = () => {
         ['propertyInsuranceRate', 'Tasa Seguro del Inmueble', data.propertyInsuranceRate, updateData, 'pnum'],
         ['postage', 'Portes', data.postage, updateData, 'pnum']
     ]
-
-    let userNameH1 = (
-        <div>
-            <h1>{username}</h1>
-        </div>
-    )
-    const userIcon = (
-        <div>
-            <i className="pi pi-user" style={{ fontSize: '2.5rem', color: 'white'}}></i>
-        </div>
-    )
 
     const sendData = async (data) => {
         console.log(data);
@@ -130,7 +120,7 @@ const InformationInput = () => {
 
     return (
         <div className='information-input'>
-            <Toolbar className='toolbar' start={userNameH1} end={userIcon}/>
+            <AppToolbar type={'information-input'} title={username} />
 
             <h1>Insertar Información</h1>
             <div className="information-input-content">

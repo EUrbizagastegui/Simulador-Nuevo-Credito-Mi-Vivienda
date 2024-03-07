@@ -1,6 +1,7 @@
 import './Home.css'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import AppToolbar from '../app-toolbar/AppToolbar';
 import { Toolbar } from 'primereact/toolbar';
 import ScheduleList from '../schedule-list/ScheduleList';
 import UserService from '../../shared/services/user-service';
@@ -24,24 +25,13 @@ const Home = () => {
         }
     }
 
-    let userNameH1 = (
-        <div>
-            <h1>{username}</h1>
-        </div>
-    )
-    const userIcon = (
-        <div>
-            <i className="pi pi-user" style={{ fontSize: '2.5rem', color: 'white'}}></i>
-        </div>
-    )
-
     useEffect(() => {
         fetchData();
     }, [actionCounter])
 
     return (
         <div className='home'>
-            <Toolbar className='toolbar' start={userNameH1} end={userIcon}/>
+            <AppToolbar type='home' title={username} />
             <ScheduleList schedules={schedules} username={username} increaseActionCounter={increaseActionCounter} />
             <Toolbar className='footer' center='© 2024 Erick Urbizagastegui - Salvador Torres'/>
         </div>

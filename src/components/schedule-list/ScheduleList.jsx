@@ -1,12 +1,15 @@
 import './ScheduleList.css'
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import ScheduleListItem from '../schedule-list-item/ScheduleListItem'
 import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
 import { Link } from 'react-router-dom';
 import ConfirmAction from '../confirm-action/ConfirmAction';
 import PaymentScheduleService from '../../shared/services/payment-schedule-service';
 
 const ScheduleList = ({schedules, username, increaseActionCounter}) => {
+    const toast = useRef(null);
+
     const [showConfirmNotif, setShowConfirmNotif] = useState(false);
     const [scheduleIdToDelete, setScheduleIdToDelete] = useState(0);
 
@@ -21,18 +24,24 @@ const ScheduleList = ({schedules, username, increaseActionCounter}) => {
         setShowConfirmNotif(false);
     }
 
+
+    const toastSuccess = 'El cronograma ha sido eliminado exitosamente.'
+    const toastError = 'Ocurrio un error al eliminar el cronograma.'
+
     const deleteSchedule = async (id) => {
         try {
             await PaymentScheduleService.delete(id);
             increaseActionCounter();
             setShowConfirmNotif(false);
+            toast.current.show({ severity: 'success', summary: 'Eliminación exitosa', detail: toastSuccess });
         } catch (error) {
-            alert("Ocurrió un error al eliminar el cronograma.", error);
+            toast.current.show({ severity: 'error', summary: 'Error en la eliminación', detail: toastError });
         }
     }
 
     return schedules.length > 0 ? (
         <div className='schedule-list'>
+            <Toast ref={toast} />
             {schedules.map((schedule) => {
                 return (
                     <div key={schedule.id} className='schedule-list-row'>

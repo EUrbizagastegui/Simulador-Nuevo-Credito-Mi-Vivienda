@@ -1,0 +1,24 @@
+.user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100dvh;
+    overflow-x: hidden;
+}
+.user-profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    height: inherit;
+}
+.user-profile-content h1 {
+    margin-bottom: 50px;
+    text-wrap: balance;
+}
+@media (width < 501px) {
+    .user-profile-content {
+        width: 70%;
+    }
+}

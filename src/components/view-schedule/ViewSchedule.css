@@ -5,6 +5,9 @@
 .view-schedule h1:nth-child(2) {
     margin-block: 20px;
 }
-.view-schedule Button {
+.view-schedule-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
     margin-bottom: 20px;
 }

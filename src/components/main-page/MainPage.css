@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     min-height: 100dvh;
+    overflow-x: hidden;
 }
 .main-page-content-center {
     display: grid;

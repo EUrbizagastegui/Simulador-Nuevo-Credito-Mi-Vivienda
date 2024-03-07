@@ -1,6 +1,7 @@
 import './ViewSchedule.css'
 import { useEffect, useState } from 'react';
 import { useLocation, useParams, Link } from 'react-router-dom';
+import AppToolbar from '../app-toolbar/AppToolbar';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -129,34 +130,31 @@ const ViewSchedule = () => {
         calculateSchedule()
     }
 
-    let userNameH1 = (
-        <div>
-            <h1>{username}</h1>
-        </div>
-    )
-
-    const userIcon = (
-        <div>
-            <i className="pi pi-user" style={{ fontSize: '2.5rem', color: 'white'}}></i>
-        </div>
-    )
-
     useEffect(() => {
         calculateSchedule()
     }, [])
 
     return (
         <div className='view-schedule'>
-            <Toolbar className='toolbar' start={userNameH1} end={userIcon}/>
+            <AppToolbar type={'view-schedule'} title={username} />
+
             <h1>Cronograma Simulado</h1>
-            <Link to={'/information-input/' + username}>
-                <Button label='Volver a calcular' />
-            </Link>
+
+            <div className='view-schedule-buttons'>
+                <Link to={'/information-input/' + username}>
+                    <Button label='Volver a calcular' />
+                </Link>
+                <Link to={'/home/' + username}>
+                    <Button label='Volver a home' />
+                </Link>
+            </div>
+
             <DataTable value={schedule} tableStyle={{ minWidth: '50rem' }}>
                 {columns.map((col, i) => (
                     <Column key={col.field} field={col.field} header={col.header} />
                 ))}
             </DataTable>
+
             <Toolbar className='footer' center='© 2024 Erick Urbizagastegui - Salvador Torres'/>
         </div>
     )
