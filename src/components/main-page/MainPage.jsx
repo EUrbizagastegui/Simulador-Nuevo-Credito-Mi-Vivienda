@@ -1,6 +1,7 @@
 import './MainPage.css'
 import { Toolbar } from 'primereact/toolbar';
 import AppToolbar from '../app-toolbar/AppToolbar';
+import MainPageImg from '/assets/images/main-page-img.webp';
 
 const MainPage = () => {
     return (
@@ -8,7 +9,7 @@ const MainPage = () => {
             <AppToolbar type={'main-page'} />
 
             <div className='main-page-content-center'>
-                <img src="../../src/assets/images/main-page-img.webp" alt="Hero image" />
+                <img src={MainPageImg} />
                 <div>
                     <h2>¿Qué es el programa Nuevo Crédito del fondo Mi Vivienda?</h2>
                     <p>
