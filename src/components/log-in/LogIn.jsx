@@ -53,14 +53,15 @@ const LogIn = () => {
         <div>
             <Toast ref={toast} />
             <div className='log-in'>
-                <div>
+                <div className='log-in-content'>
                     <h1>¡Bienvenido de vuelta!</h1>
                     <p>Con nuestro simulador, puedes obtener una estimación del cronograma de pagos para tu crédito del programa Nuevo Crédito del fondo Mi Vivienda en Perú.</p>
                 </div>
-                <div>
+                <div className='log-in-content'>
                     <h1>Iniciar Sesión</h1>
-                    {information.map((info) => 
-                        <LabelInput key={info[0]} id={info[0]} text={info[1]} state={info[2]} setState={info[3]} />
+                    {information.map((info, index) => 
+                        <LabelInput key={info[0]} id={info[0]} text={info[1]} state={info[2]} setState={info[3]} 
+                        {...(index >= 1 ? {isPassword: true} : {})} />
                     )}
                     <Button label='Iniciar Sesión' onClick={sendData}/>
                 </div>

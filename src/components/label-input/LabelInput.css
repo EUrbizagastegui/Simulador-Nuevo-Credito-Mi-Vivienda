@@ -12,3 +12,20 @@
 .label-input .p-inputtext {
     width: 100%;
 }
+.label-input-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.label-input-icon i {
+    font-size: clamp(18px, 2vw, 2.5vw);
+}
+.label-input-icon i:hover {
+    cursor: pointer;
+}
+@media (width<501px) {
+    .label-input {
+        width: 80%;
+    }
+}

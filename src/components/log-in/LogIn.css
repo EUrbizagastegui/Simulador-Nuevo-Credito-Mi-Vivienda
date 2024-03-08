@@ -3,9 +3,10 @@
     grid-template-columns: 1fr 1fr; /* Divide la pantalla en dos partes iguales */
     height: 100dvh;
 }
-.log-in div {
+.log-in-content {
     display: grid;
     place-content: center;
+    place-items: center;
 }
 .log-in h1 {
     text-align: center;
@@ -45,5 +46,8 @@
     }
     .log-in p {
         display: none;
+    }
+    .log-in Button {
+        width: 80%;
     }
 }
