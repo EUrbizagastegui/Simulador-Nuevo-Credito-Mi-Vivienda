@@ -49,6 +49,10 @@ const LogIn = () => {
         }
     }
 
+    const handleEnterPress = () => {
+        sendData();
+    }
+
     return (
         <div>
             <Toast ref={toast} />
@@ -57,12 +61,20 @@ const LogIn = () => {
                     <h1>¡Bienvenido de vuelta!</h1>
                     <p>Con nuestro simulador, puedes obtener una estimación del cronograma de pagos para tu crédito del programa Nuevo Crédito del fondo Mi Vivienda en Perú.</p>
                 </div>
+                
                 <div className='log-in-content'>
                     <h1>Iniciar Sesión</h1>
                     {information.map((info, index) => 
-                        <LabelInput key={info[0]} id={info[0]} text={info[1]} state={info[2]} setState={info[3]} 
+                        <LabelInput
+                        key={info[0]}
+                        id={info[0]}
+                        text={info[1]}
+                        state={info[2]}
+                        setState={info[3]} 
+                        onEnter={handleEnterPress}
                         {...(index >= 1 ? {isPassword: true} : {})} />
                     )}
+
                     <Button label='Iniciar Sesión' onClick={sendData}/>
                 </div>
             </div>

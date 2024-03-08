@@ -42,3 +42,8 @@
         padding: 10px; /* Cambiar padding a 10px */
     }
 }
+@media (width < 501px) {
+    .input-currency {
+        width: 80%;
+    }
+}
