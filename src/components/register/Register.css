@@ -1,6 +1,7 @@
 .register {
     display: grid;
     place-content: center;
+    place-items: center;
     height: 100dvh;
 }
 .register h1 {

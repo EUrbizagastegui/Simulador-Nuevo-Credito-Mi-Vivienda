@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: 'http://localhost:5177/api/v1',
+    baseURL: 'https://nuevo-credito-web-api.azurewebsites.net/api/v1',
     headers: { 'Content-type': 'application/json' }
 });
