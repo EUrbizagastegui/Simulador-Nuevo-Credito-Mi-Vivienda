@@ -5,10 +5,17 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom';
 import UserService from '../../shared/services/user-service';
+import { useEffect } from 'react';
 
 const LogIn = () => {
+    const [ loading, setLoading ] = useState(false);
+    const [ textLoading, setTextLoading ] = useState('Iniciar Sesión');
     const navigate = useNavigate();
     const toast = useRef(null);
+
+    useEffect(() => {
+        setTextLoading(loading ? 'Cargando...' : 'Iniciar Sesión');
+    }, [loading]);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -39,13 +46,15 @@ const LogIn = () => {
             "email": email,
             "password": password
         }
-
+        setLoading(true);
         try {
             const response = await UserService.verifyUser(data);
             localStorage.setItem('userId', response.data.id);
             navigate('/home/' + response.data.username);
+            setLoading(false);
         } catch (error) {
             toast.current.show({ severity: 'error', summary: 'Error de usuario y contraseña', detail: toastError });
+            setLoading(false);
         }
     }
 
@@ -74,8 +83,7 @@ const LogIn = () => {
                         onEnter={handleEnterPress}
                         {...(index >= 1 ? {isPassword: true} : {})} />
                     )}
-
-                    <Button label='Iniciar Sesión' onClick={sendData}/>
+                    <Button label={textLoading} onClick={sendData}/>
                 </div>
             </div>
         </div>
