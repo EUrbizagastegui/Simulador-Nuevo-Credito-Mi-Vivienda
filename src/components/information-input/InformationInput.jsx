@@ -45,7 +45,7 @@ const InformationInput = () => {
     ]
 
     let information = [
-        ['disbursementDate', 'Fecha de Desembolso XX/XX/XXX', data.disbursementDate, updateData, '/^[^<>*!]+$/'],
+        ['disbursementDate', 'Fecha de Desembolso XX/XX/XXXX', data.disbursementDate, updateData, '/^[^<>*!]+$/'],
         ['paymentDay', 'Día de Pago', data.paymentDay, updateData, 'pint'],
         ['amount', 'Importe Desembolsado', data.amount, updateData, 'pnum'],
         ['propertyValue', 'Valor del Inmueble', data.propertyValue, updateData, 'pnum'],
