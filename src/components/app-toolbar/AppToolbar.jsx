@@ -29,8 +29,9 @@ const AppToolbar = ({type, title}) => {
         </div>
     )
 
-    const _title = (
-        <div>
+    const start = (
+        <div className='app-toolbar-title'>
+            <i className="pi pi-home" style={{ fontSize: '2rem', color: 'white'}} onClick={() => navigate('/home/' + title)}></i>
             <h1>{title}</h1>
         </div>
     )
@@ -41,7 +42,7 @@ const AppToolbar = ({type, title}) => {
 
     const userIcon = (
         <div>
-            <i className="pi pi-user" style={{ fontSize: '2.5rem', color: 'white'}} onClick={accesProfile}></i>
+            <i className="pi pi-user" style={{ fontSize: '2rem', color: 'white'}} onClick={accesProfile}></i>
         </div>
     )
 
@@ -81,7 +82,7 @@ const AppToolbar = ({type, title}) => {
         </div>
     ) : (
         <div className='app-toolbar'>
-            <Toolbar className='toolbar' start={_title} end={userIcon}/>
+            <Toolbar className='toolbar' start={start} end={userIcon}/>
         </div>
     )
 }

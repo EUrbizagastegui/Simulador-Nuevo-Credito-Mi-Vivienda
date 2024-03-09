@@ -1,12 +1,17 @@
 .app-toolbar {
     width: 100dvw;
 }
-.pi-user {
+.pi-user, .pi-home {
     transition: all 0.3s ease-in-out;
 }
-.pi-user:hover {
+.pi-user:hover, .pi-home:hover {
     cursor: pointer;
-    padding: 5px;
     background-color: #0799b3;
     border-radius: 5px;
+}
+.app-toolbar-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
 }

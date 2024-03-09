@@ -33,11 +33,18 @@ const UserProfile = () => {
         ['password', 'Contraseña', data.password, updateData, '/[^s]/']
     ]
 
+    const toastIncomplete = 'Por favor, complete todos los campos.'
+
     const toastSuccess = 'Los datos actualizados se mostrarán una vez vuelva a iniciar sesión.'
 
     const toastError = 'Ocurrió un error al actualizar los datos.'
 
     const openConfirmation = () => {
+        if (data.username === '' || data.password === '') {
+            toast.current.show({ severity: 'error', summary: 'Datos incompletos', detail: toastIncomplete });
+            return;
+        }
+
         setShowConfirm(true);
     }
 
@@ -50,9 +57,9 @@ const UserProfile = () => {
         try {
             await UserService.update(id, data);
             closeConfirm();
-            toast.current.show({ severity: 'info', summary: 'Info', detail: toastSuccess });
+            toast.current.show({ severity: 'info', summary: 'Datos actualizados', detail: toastSuccess });
         } catch (error) {
-            toast.current.show({ severity: 'error', summary: 'Info', detail: toastError });
+            toast.current.show({ severity: 'error', summary: 'Error al actualizar', detail: toastError });
         }
     }
 

@@ -60,9 +60,7 @@ const InformationInput = () => {
     ]
 
     const sendData = async (data) => {
-        console.log(data);
         const response = await PaymentScheduleService.create(data);
-        console.log(response);
     }
 
     const toggleSchedule = () => {
@@ -126,7 +124,7 @@ const InformationInput = () => {
             <div className='information-input'>
                 <AppToolbar type={'information-input'} title={username} />
             
-                <h1>Insertar Información</h1>
+                <h1 className='information-input-title'>Insertar Información</h1>
                 <div className="information-input-content">
                     <div className='input-currency'>
                         <label htmlFor="currency">Moneda</label>

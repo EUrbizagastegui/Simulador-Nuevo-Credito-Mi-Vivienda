@@ -32,7 +32,9 @@ const Home = () => {
     return (
         <div className='home'>
             <AppToolbar type='home' title={username} />
-            <ScheduleList schedules={schedules} username={username} increaseActionCounter={increaseActionCounter} />
+            <div className='home-content'>
+                <ScheduleList schedules={schedules} username={username} increaseActionCounter={increaseActionCounter} />
+            </div>
             <Toolbar className='footer' center='© 2024 Erick Urbizagastegui - Salvador Torres'/>
         </div>
     )

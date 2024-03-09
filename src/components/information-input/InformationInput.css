@@ -4,10 +4,6 @@
     align-items: center;
     overflow-x: hidden;
 }
-.information-input h1:nth-child(2) {
-    text-align: center;
-    padding: 50px;
-}
 .information-input Button {
     margin-bottom: 20px;
 }
@@ -46,4 +42,8 @@
     .input-currency {
         width: 80%;
     }
+}
+.information-input-title {
+    text-align: center;
+    padding: 50px;
 }

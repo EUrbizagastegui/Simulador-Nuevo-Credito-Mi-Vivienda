@@ -138,7 +138,7 @@ const ViewSchedule = () => {
         <div className='view-schedule'>
             <AppToolbar type={'view-schedule'} title={username} />
 
-            <h1>Cronograma Simulado</h1>
+            <h1 className='view-schedule-title'>Cronograma Simulado</h1>
 
             <div className='view-schedule-buttons'>
                 <Link to={'/information-input/' + username}>

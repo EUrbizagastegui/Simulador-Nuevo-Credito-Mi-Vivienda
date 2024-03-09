@@ -8,6 +8,11 @@
     border-radius: 10px;
     background-color: #07B6D5;
 }
+.schedule-list-item:hover {
+    cursor: pointer;
+    background-color: #0998b1;
+    transition: background-color 0.2s ease-in-out;
+}
 .schedule-list-item h3 {
     color: white;
 }
