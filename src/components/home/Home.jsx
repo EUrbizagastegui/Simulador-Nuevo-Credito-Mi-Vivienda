@@ -21,7 +21,7 @@ const Home = () => {
             const psResponse = await UserService.getAllPaymentSchedules(Number(localStorage.getItem('userId')));
             setSchedules(psResponse.data); // MAPEAR TENIENDO EN CUENTA QUE CADA ELEMENTO DEL ARRAY ES UN OBJETO
         } catch (error) {
-            alert("An error ocurred when fetching data.", error);
+            console.log("An error ocurred when fetching data.", error);
         }
     }
 
