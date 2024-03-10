@@ -78,6 +78,10 @@ const InformationInput = () => {
         }
 
         // Validación de los demás campos
+        if (Number(data.amount > data.propertyValue)) {
+            toast.current.show({ severity: 'error', summary: 'Error en importe desembolsado', detail: 'El importe desembolsado no puede ser mayor al valor del inmueble.' });
+            return;
+        }
         if (Number(data.paymentDay) < 1 || Number(data.paymentDay > 31)) {
             toast.current.show({ severity: 'error', summary: 'Error en día de pago', detail: 'El día de pago debe estar entre 1 y 31.' });
             return;

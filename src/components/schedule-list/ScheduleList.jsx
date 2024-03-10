@@ -42,6 +42,7 @@ const ScheduleList = ({schedules, username, increaseActionCounter}) => {
     return schedules.length > 0 ? (
         <div className='schedule-list'>
             <Toast ref={toast} />
+            <h1>Cronogramas Simulados</h1>
             {schedules.map((schedule) => {
                 return (
                     <div key={schedule.id} className='schedule-list-row'>
